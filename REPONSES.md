@@ -1,6 +1,6 @@
 # REPONSES.md - Projet SOAP Bank
 
-## 🅰️ A) Vérification du WSDL
+## A) Vérification du WSDL
 
 ### URL du WSDL
 ```
@@ -8,7 +8,7 @@ http://localhost:8080/ws/bank.wsdl
 ```
 
 ### Confirmation du démarrage
-✅ Le service démarre correctement avec Spring Boot sur le port 8080.
+Le service démarre correctement avec Spring Boot sur le port 8080.
 
 Pour démarrer le service :
 ```bash
@@ -20,16 +20,16 @@ Une fois démarré, l'URL du WSDL affiche un fichier XML décrivant le contrat d
 
 ---
 
-## 🅱️ B) Lecture du contrat (Contract-First)
+## B) Lecture du contrat (Contract-First)
 
-### 1️⃣ Fichier XSD identifié
+### 1️)Fichier XSD identifié
 
 **Emplacement** : `src/main/resources/bank.xsd`
 
 **Rôle du XSD** :  
 Le fichier XSD définit le contrat du service SOAP. Il décrit les requêtes et réponses échangées (éléments, types, règles), à partir desquels le WSDL et les classes Java sont générés automatiquement via JAXB.
 
-### 2️⃣ Éléments requête / réponse
+### 2️) Éléments requête / réponse
 
 | Opération | Élément | Type | Description |
 |-----------|---------|------|-------------|
@@ -43,7 +43,7 @@ Le fichier XSD définit le contrat du service SOAP. Il décrit les requêtes et 
 | **DepositRequest** | amount | decimal | Montant à déposer |
 | **DepositResponse** | newBalance | decimal | Nouveau solde après dépôt |
 
-### 3️⃣ Lecture du WSDL
+### 3️) Lecture du WSDL
 
 **Namespace** :
 ```
@@ -76,7 +76,7 @@ http://localhost:8080/ws
 **URL** : `http://localhost:8080/ws`  
 **Header** : `Content-Type: text/xml; charset=utf-8`
 
-### 1️⃣ Test GetAccount (A100)
+### 1️) Test GetAccount (A100)
 
 **Requête XML** :
 ```xml
@@ -91,7 +91,7 @@ http://localhost:8080/ws
 </soapenv:Envelope>
 ```
 
-**Réponse attendue** :
+**Réponse** :
 ```xml
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
   <SOAP-ENV:Body>
@@ -107,9 +107,9 @@ http://localhost:8080/ws
 </SOAP-ENV:Envelope>
 ```
 
-📸 **Capture écran** : À faire dans Postman
+ **Capture écran** :![alt text](image.png)
 
-### 2️⃣ Test Deposit (20.00 sur A100)
+### 2️) Test Deposit (20.00 sur A100)
 
 **Requête XML** :
 ```xml
@@ -125,7 +125,7 @@ http://localhost:8080/ws
 </soapenv:Envelope>
 ```
 
-**Réponse attendue** :
+**Réponse** :
 ```xml
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
   <SOAP-ENV:Body>
@@ -136,11 +136,11 @@ http://localhost:8080/ws
 </SOAP-ENV:Envelope>
 ```
 
-✅ Le solde passe de 150.00 à 170.00 TND.
+Le solde passe de 150.00 à 170.00 TND.
 
-📸 **Capture écran** : À faire dans Postman
+ **Capture écran** : ![alt text](image-1.png)
 
-### 3️⃣ Tests SOAP Fault (erreurs)
+### 3️) Tests SOAP Fault (erreurs)
 
 #### Test 1 : Montant négatif
 
@@ -158,7 +158,7 @@ http://localhost:8080/ws
 </soapenv:Envelope>
 ```
 
-**Réponse attendue (SOAP Fault)** :
+**Réponse (SOAP Fault)** :
 ```xml
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
   <SOAP-ENV:Body>
@@ -170,7 +170,7 @@ http://localhost:8080/ws
 </SOAP-ENV:Envelope>
 ```
 
-📸 **Capture écran** : À faire dans Postman
+ **Capture écran** :![alt text](image-2.png)
 
 #### Test 2 : Compte inexistant (Z999)
 
@@ -187,7 +187,7 @@ http://localhost:8080/ws
 </soapenv:Envelope>
 ```
 
-**Réponse attendue (SOAP Fault)** :
+**Réponse (SOAP Fault)** :
 ```xml
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
   <SOAP-ENV:Body>
@@ -199,11 +199,11 @@ http://localhost:8080/ws
 </SOAP-ENV:Envelope>
 ```
 
-📸 **Capture écran** : À faire dans Postman
+ **Capture écran** :![alt text](image-3.png)
 
 ---
 
-## 🅳 D) Ajout d'une fonctionnalité (Contract-First)
+##  D) Ajout d'une fonctionnalité (Contract-First)
 
 ### Fonctionnalité ajoutée : **Withdraw** (Retrait)
 
@@ -292,7 +292,7 @@ public WithdrawResponse withdraw(@RequestPayload WithdrawRequest request) {
 
 ### Tests Postman pour Withdraw
 
-#### ✅ Test nominal : Retrait valide (50.00 sur A100)
+#### Test nominal : Retrait valide (50.00 sur A100)
 
 **Requête XML** :
 ```xml
@@ -308,7 +308,7 @@ public WithdrawResponse withdraw(@RequestPayload WithdrawRequest request) {
 </soapenv:Envelope>
 ```
 
-**Réponse attendue** :
+**Réponse** :
 ```xml
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
   <SOAP-ENV:Body>
@@ -319,9 +319,8 @@ public WithdrawResponse withdraw(@RequestPayload WithdrawRequest request) {
 </SOAP-ENV:Envelope>
 ```
 
-📸 **Capture écran** : À faire dans Postman
 
-#### ❌ Test erreur : Solde insuffisant (retrait de 200.00 sur A100)
+#### Test erreur : Solde insuffisant (retrait de 200.00 sur A100)
 
 **Requête XML** :
 ```xml
@@ -337,7 +336,7 @@ public WithdrawResponse withdraw(@RequestPayload WithdrawRequest request) {
 </soapenv:Envelope>
 ```
 
-**Réponse attendue (SOAP Fault)** :
+**Réponse (SOAP Fault)** :
 ```xml
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
   <SOAP-ENV:Body>
@@ -349,11 +348,10 @@ public WithdrawResponse withdraw(@RequestPayload WithdrawRequest request) {
 </SOAP-ENV:Envelope>
 ```
 
-📸 **Capture écran** : À faire dans Postman
 
 ---
 
-## ✅ Livrables finaux
+##  Livrables finaux
 
 - ✔ Code pushé sur le fork Git
 - ✔ Captures d'écran Postman (GetAccount, Deposit, Withdraw, SOAP Faults)
@@ -362,7 +360,7 @@ public WithdrawResponse withdraw(@RequestPayload WithdrawRequest request) {
 
 ---
 
-## 📝 Notes complémentaires
+##  Notes complémentaires
 
 ### Compilation et génération des classes
 
